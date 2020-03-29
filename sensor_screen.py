@@ -1,8 +1,9 @@
 import csv
 import time
-import datetime
 import mh_z19
 import collections
+
+from datetime import datetime, timedelta
 
 
 from luma.core.interface.serial import i2c
@@ -18,26 +19,26 @@ measurements = {}
 
 while True:
     for i in range(6):
-        now = datetime.datetime.now()
+        now = datetime.now()
         co2 = mh_z19.read()
         #print(co2)
         measurements[now] = co2['co2']
         orderedMeasurements = collections.OrderedDict(sorted(measurements.items())).values()
         #print(orderedMeasurements)
 
-        with canvas(device) as draw:
-            draw.rectangle(device.bounding_box, outline="white", fill="black")
-            draw.text((5, 5), ("CO2: " + str(co2['co2'])), fill="white")
-            draw.line((5,20,5,55), fill="white")
-            draw.line((5,55,120,55), fill="white")
+        minuteAgo = now - timedelta(minutes=1)
 
-            for i, m in enumerate(orderedMeasurements):
-                height = 55 - m / 29
-                height = max(min(55, height), 20)
-         #       print(height)
-                draw.point(((120 - len(orderedMeasurements) + i), height), fill="white")
-                if i > 114:
-                    break
+        #with canvas(device) as draw:
+         #   draw.rectangle(device.bounding_box, outline="white", fill="black")
+          #  draw.text((5, 5), ("CO2: " + str(co2['co2'])), fill="white")
+           # draw.line((5,20,5,55), fill="white")
+            #draw.line((5,55,120,55), fill="white")
+
+            #for i, m in enumerate(orderedMeasurements[:115]):
+             #   height = 55 - m / 29
+              #  height = max(min(55, height), 20)
+         #     #  print(height)
+                #draw.point(((120 - len(orderedMeasurements) + i), height), fill="white")
 
         time.sleep(3)
 
