@@ -23,26 +23,29 @@ while True:
         co2 = mh_z19.read()
         #print(co2)
         measurements[now] = co2['co2']
-        orderedMeasurements = collections.OrderedDict(sorted(measurements.items())).values()
+        orderedMeasurements = collections.OrderedDict(sorted(measurements.items(), reverse=True)).values()
         #print(orderedMeasurements)
 
         minuteAgo = now - timedelta(minutes=1)
 
-        #with canvas(device) as draw:
-         #   draw.rectangle(device.bounding_box, outline="white", fill="black")
-          #  draw.text((5, 5), ("CO2: " + str(co2['co2'])), fill="white")
-           # draw.line((5,20,5,55), fill="white")
-            #draw.line((5,55,120,55), fill="white")
+        with canvas(device) as draw:
+            draw.rectangle(device.bounding_box, outline="white", fill="black")
+            draw.text((5, 5), ("CO2: " + str(co2['co2'])), fill="white")
+            draw.line((5,20,5,55), fill="white")
+            draw.line((5,55,120,55), fill="white")
 
-            #for i, m in enumerate(orderedMeasurements[:115]):
-             #   height = 55 - m / 29
-              #  height = max(min(55, height), 20)
-         #     #  print(height)
-                #draw.point(((120 - len(orderedMeasurements) + i), height), fill="white")
+            for i, m in enumerate(orderedMeasurements[:115]):
+#                print(i)
+                height = 55 - m / 29
+                height = max(min(55, height), 20)
+         #       print(height)
+                draw.point(((120 -  i), height), fill="white")
 
-        time.sleep(3)
 
-with open ('co2.csv', mode='w') as f:
-    writer = csv.writer(f)
-    for k, v in measurements.items():
-        writer.writerow([k,v])
+    with open ('co2.csv', mode='w') as f:
+        writer = csv.writer(f)
+        for k, v in measurements.items():
+            writer.writerow([k,v])
+
+        time.sleep(1)
+
