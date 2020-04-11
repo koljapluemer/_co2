@@ -7,8 +7,8 @@ def btn():
 
 buttonUp = Button(22, pull_up=False)
 buttonDown = Button(24, pull_up=False)
-buttonLeft = Button(25, pull_up=False)
-buttonRight = Button(23, pull_up=False)
+buttonBack = Button(25, pull_up=False)
+buttonGo = Button(23, pull_up=False)
 
 buttonUp.when_pressed = btn
 
