@@ -3,22 +3,19 @@ import csv
 import time
 import mh_z19
 import collections
+import numpy
+import time
 
 from datetime import datetime, timedelta
-
-import numpy
-
 
 from luma.core.interface.serial import i2c
 from luma.core.render import canvas
 from luma.oled.device import ssd1306, ssd1325, ssd1331, sh1106
-import time
 
 serial = i2c(port=1, address=0x3C)
 device = ssd1306(serial, rotate=0)
 
 measurements = {}
-
 
 while True:
     for i in range(6):
@@ -26,11 +23,11 @@ while True:
         co2 = mh_z19.read()
         measurements[now] = co2['co2']
         orderedMeasurements = collections.OrderedDict(sorted(measurements.items(), reverse=True)).values()
-        
+
         minuteAgo = now - timedelta(minutes=1)
         recentMeasurements = {k: v for k, v in measurements.items() if k > minuteAgo}
         try:
-            minuteAvg = sum(recentMeasurements.values()) / len(recentMeasurements.values()) 
+            minuteAvg = sum(recentMeasurements.values()) / len(recentMeasurements.values())
             minuteStd = numpy.std(numpy.array(recentMeasurements.values()), axis=0)
         except:
             minuteAvg = 0
@@ -57,5 +54,3 @@ while True:
         writer = csv.writer(f)
         for k, v in measurements.items():
             writer.writerow([k,v])
-
-
