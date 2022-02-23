@@ -9,10 +9,6 @@ Always call pip indirectly, like `sudo -H python3 -m pip install $FOO`.
 
 Follow the specific instructions for `luma` and `numpy`, if problems arise.
 
-## Current Problems
-
-The mh_z19 sensor is not recognized.
-
 ## Next Up
 
 * Reassemble the setup
