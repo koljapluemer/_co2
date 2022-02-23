@@ -15,5 +15,6 @@ The mh_z19 sensor is not recognized.
 
 ## Next Up
 
-* Buy an appropriate power supply
-* Buy a, um, cable combinator (the problem is probably due to shitty connections on DIY taped together wires - we need this, because the monitor and the sensor share ports)
+* Reassemble the setup
+* Consider switching to Arduino
+* Add temperature and moisture sensors?
